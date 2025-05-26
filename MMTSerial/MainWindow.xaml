@@ -5,47 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MMTSerial"
         mc:Ignorable="d"
-        Title="MMTSerial" Height="350" Width="525">
+        Title="MMTSerial" Height="359" Width="550" Closing="Window_Closing">
     <Grid>
-        <Label x:Name="lblPort" Content="Port:" HorizontalAlignment="Right" Margin="0,18,444,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbPort" HorizontalAlignment="Left" Margin="80,20,0,0" VerticalAlignment="Top" Width="90" DropDownOpened="cbPort_DropDownOpened"/>
-        <Label x:Name="lblBaud" Content="Baud:" HorizontalAlignment="Right" Margin="0,50,444,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbBaud" HorizontalAlignment="Left" Margin="80,52,0,0" VerticalAlignment="Top" Width="90" SelectedIndex="2">
-            <ComboBoxItem>1200</ComboBoxItem>
-            <ComboBoxItem>2400</ComboBoxItem>
-            <ComboBoxItem>4800</ComboBoxItem>
-            <ComboBoxItem>9600</ComboBoxItem>
-        </ComboBox>
-        <Label x:Name="lblData" Content="Data bits:" HorizontalAlignment="Right" Margin="0,82,444,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbData" HorizontalAlignment="Left" Margin="80,84,0,0" VerticalAlignment="Top" Width="90" SelectedIndex="0">
-            <ComboBoxItem>7</ComboBoxItem>
-            <ComboBoxItem>8</ComboBoxItem>
-        </ComboBox>
-        <Label x:Name="lblDelay" Content="Delay (ms):" HorizontalAlignment="Right" Margin="0,50,270,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbDelay" HorizontalAlignment="Left" Height="23" Margin="256,52,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="90"/>
-        <Label x:Name="lblStop" Content="Stop bits:" HorizontalAlignment="Right" Margin="0,82,270,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbStop" HorizontalAlignment="Left" Margin="256,84,0,0" VerticalAlignment="Top" Width="90" />
-        <Label x:Name="lblParity" Content="Parity:" HorizontalAlignment="Right" Margin="0,114,444,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbParity" HorizontalAlignment="Left" Margin="80,116,0,0" VerticalAlignment="Top" Width="90" />
-        <Label x:Name="lblHand" Content="Handshake:" HorizontalAlignment="Right" Margin="0,114,270,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbHand" HorizontalAlignment="Left" Margin="256,116,0,0" VerticalAlignment="Top" Width="90" />
+        <Label x:Name="lblPort" Content="Port:" HorizontalAlignment="Right" Margin="0,20,467,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbPort" HorizontalAlignment="Left" Margin="80,20,0,0" VerticalAlignment="Top" Width="90" DropDownOpened="cbPort_DropDownOpened" SelectionChanged="cbPort_SelectionChanged"/>
+        <Label x:Name="lblBaud" Content="Baud:" HorizontalAlignment="Right" Margin="0,52,467,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbBaud" HorizontalAlignment="Left" Margin="80,52,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="cbBaud_SelectionChanged" />
+        <Label x:Name="lblData" Content="Data bits:" HorizontalAlignment="Right" Margin="0,84,467,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbData" HorizontalAlignment="Left" Margin="80,84,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="cbData_SelectionChanged" />
+        <Label x:Name="lblDelay" Content="Delay after chars (ms):" HorizontalAlignment="Right" Margin="0,24,128,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbDelay" HorizontalAlignment="Left" Height="23" Margin="419,26,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="52" TextChanged="tbDelay_TextChanged"/>
+        <Label x:Name="lblStop" Content="Stop bits:" HorizontalAlignment="Right" Margin="0,82,291,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbStop" HorizontalAlignment="Left" Margin="256,84,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="cbStop_SelectionChanged" />
+        <Label x:Name="lblParity" Content="Parity:" HorizontalAlignment="Right" Margin="0,113,467,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbParity" HorizontalAlignment="Left" Margin="80,116,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="cbParity_SelectionChanged" />
+        <Label x:Name="lblHand" Content="Handshake:" HorizontalAlignment="Right" Margin="0,113,291,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbHand" HorizontalAlignment="Left" Margin="256,116,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="cbHand_SelectionChanged" />
         <StackPanel Orientation="Horizontal" Width="500" Height="30" Margin="0,10,0,1">
             <Label x:Name="lblFile" Content="File:" VerticalAlignment="Center"/>
-            <TextBox x:Name="filePathTextBox" Width="360" Margin="10,0,20,0" VerticalAlignment="Center" />
-            <Button Content="Browse..." Click="BrowseButton_Click" VerticalAlignment="Center" />
+            <TextBox x:Name="filePathTextBox" Width="360" Margin="10,0,20,0" VerticalAlignment="Center" IsReadOnly="True" ToolTip="Use the browse button to select a file to transmit" Height="20" />
+            <Button Content="Browse..." Click="BrowseButton_Click" VerticalAlignment="Center" ToolTip="Click here to select file to transmit" Width="60" Height="24" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" Width="400" Height="25" Margin="50,92,50,1" HorizontalAlignment="Center">
-            <Button Content="Send File" Click="SendFileButton_Click" VerticalAlignment="Center" Margin="20,0,4,0" Width="70" />
-            <Button Content="Cancel" Click="CancelButton_Click" VerticalAlignment="Center" Margin="20,0,4,0" Width="70" />
-            <Button Content="Exit" Click="ExitButton_Click" VerticalAlignment="Center" Margin="20,0,4,0" Width="70" />
+            <Button x:Name="BtnSendFile" Content="Send File" Click="SendFileButton_Click" VerticalAlignment="Center" Margin="20,0,4,0" Width="70" Height="24" />
+            <Button x:Name="BtnCancel" Content="Cancel" Click="CancelButton_Click" VerticalAlignment="Center" Margin="20,0,4,0" Width="70" Height="24" />
+            <Button x:Name="BtnExit" Content="Exit" Click="ExitButton_Click" VerticalAlignment="Center" Margin="20,0,4,0" Width="70" Height="24" />
         </StackPanel>
-        <Label x:Name="lblTotalBytesToSend" Content="Total bytes to send:" VerticalAlignment="Center" Margin="10,160,0,0" Width="120" Height="25" HorizontalAlignment="Left" />
-        <TextBox x:Name="tbTotalBytesToSend" Width="60" Margin="128,162,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
-        <Label x:Name="lblTotalBytesSent" Content="Total bytes sent:" VerticalAlignment="Center" Margin="200,160,0,0" Width="100" Height="25" HorizontalAlignment="Left" />
-        <TextBox x:Name="tbTotalBytesSent" Width="60" Margin="300,162,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
-        <Label x:Name="lblBytesToWrite" Content="Bytes to write:" VerticalAlignment="Center" Margin="10,210,0,0" Width="120" Height="25" HorizontalAlignment="Left" />
-        <TextBox x:Name="tbBytesToWrite" Width="60" Margin="128,212,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
-        <Label x:Name="lblBytesToRead" Content="Bytes to read:" VerticalAlignment="Center" Margin="200,252,0,42" Width="100" Height="25" HorizontalAlignment="Left" />
-        <TextBox x:Name="tbBytesToRead" Width="60" Margin="300,256,0,42" VerticalAlignment="Center" HorizontalAlignment="Left" />
+        <Label x:Name="lblTotalBytesToSend" Content="Total bytes to send:" VerticalAlignment="Top" Margin="10,227,0,0" Width="120" Height="25" HorizontalAlignment="Left" />
+        <TextBox x:Name="tbTotalBytesToSend" Width="60" Margin="128,232,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="The length of the file in characters" IsReadOnly="True" Height="20" />
+        <Label x:Name="lblTotalBytesSent" Content="Total bytes sent:" VerticalAlignment="Top" Margin="200,227,0,0" Width="100" Height="25" HorizontalAlignment="Left" />
+        <TextBox x:Name="tbTotalBytesSent" Width="60" Margin="300,232,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" Height="20" />
+        <Label x:Name="lblBytesToWrite" Content="Bytes to write:" VerticalAlignment="Top" Margin="10,252,0,0" Width="120" Height="25" HorizontalAlignment="Left" />
+        <TextBox x:Name="tbBytesToWrite" Width="60" Margin="128,256,0,0" HorizontalAlignment="Left" IsReadOnly="True" VerticalAlignment="Top" Height="20" />
+        <Label x:Name="lblBytesToRead" Content="Bytes to read:" VerticalAlignment="Top" Margin="200,252,0,0" Width="100" Height="25" HorizontalAlignment="Left" />
+        <TextBox x:Name="tbBytesToRead" Width="60" Margin="300,256,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" Height="20" />
+        <Label x:Name="lblChars" Content="N° of chars single transmit:" HorizontalAlignment="Right" Margin="0,52,128,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbChars" HorizontalAlignment="Left" Height="23" Margin="419,54,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="52" TextChanged="tbChars_TextChanged"/>
+        <Label x:Name="lblStatus" Content="Current status:" VerticalAlignment="Top" Margin="10,282,0,0" Width="120" Height="25" HorizontalAlignment="Left" />
+        <Label x:Name="tbStatus" Content=" " VerticalAlignment="Top" Margin="128,282,0,0" Width="393" Height="26" HorizontalAlignment="Left" />
+
     </Grid>
 </Window>
